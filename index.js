@@ -44,6 +44,10 @@ window.onload = function() {
     context.closePath();
     context.clip();
 
+    canvas.addEventListener("touchstart", handleStart)
+    canvas.addEventListener("touchmove", handleMove)
+    canvas.addEventListener("touchend", handleEnd)
+
     if(savedFlag) {
         star_img.src = "C:\\Users\\geran\\Downloads.my-canvas.jpeg"
     } else {
@@ -98,6 +102,35 @@ canvas.onmouseout = function(e) {
 
 };
 }
+
+//Mobile touch handlers
+function handleStart(e) {
+
+    var mouseX = e.touches[0].pageX - this.offsetLeft;
+    var mouseY = e.touches[0].pageY - this.offsetTop;
+
+
+    if (mouseX >= (currentX - star_img.width/2) &&
+        mouseX <= (currentX + star_img.width/2) &&
+        mouseY >= (currentY - star_img.height/2) &&
+        mouseY <= (currentY + star_img.height/2)) {
+        isDraggable = true;
+    //currentX = mouseX;
+    //currentY = mouseY;
+    }
+};
+function handleMove(e) {
+
+    if (isDraggable) {
+        currentMouseX = e.touches[0].pageX - this.offsetLeft;
+        currentMouseY = e.touches[0].pageY - this.offsetLeft;
+    }
+};
+ function handleEnd(e) {
+    isDraggable = false;
+
+};
+
 function _DrawImage() {
 
 context.drawImage(star_img, currentMouseX-(star_img.width/2), currentMouseY-(star_img.height/2));
